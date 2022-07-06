@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Gantt from "./components/Gantt";
+import Toolbar from "./components/Toolbar";
+import data from "./data/data";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+	state = {
+		currentZoom: "Days",
+	};
+
+	handleZoomChange = (zoom) => {
+		this.setState({
+			currentZoom: zoom,
+		});
+	};
+
+	render() {
+		const { currentZoom } = this.state;
+		return (
+			<div>
+				<div className="zoom-bar">
+					<Toolbar zoom={currentZoom} onZoomChange={this.handleZoomChange} />
+				</div>
+				<div className="gantt-container">
+					<Gantt tasks={data} zoom={currentZoom} />
+				</div>
+			</div>
+		);
+	}
 }
 
 export default App;
